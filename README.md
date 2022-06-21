@@ -11,7 +11,7 @@ or
 kemono_dl.py -i input.txt
 ```
 
-# Requeriments:
+# Requirements:
 ```
 urllib3
 beautifulsoup4
