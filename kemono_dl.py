@@ -7,6 +7,7 @@ creator_id = ''
 creator_name = ''
 output_folder = 'output'
 download_pages = {}
+dev = False
 
 def to_beta_url(url):
     global site_sub, creator_id
@@ -45,7 +46,10 @@ def download_file(url, file_name, post_id):
     if os.path.isfile(f'{output_folder}//{creator_name}//{post_id}-{file_name}'):  # file exists
         return
 
-    print(f'Downloading: \'{creator_name}\' - {post_id} - {file_name} - {url}')
+    if dev:
+        print(f'Downloading: \'{creator_name}\' - {post_id} - {file_name} - {url}')
+    else:
+        print(f'Downloading: \'{creator_name}\' - {post_id} - {file_name}')
 
     if file_name.startswith('http'):
         file_name = re.search(r'/.+/(.+\..+)', url).group(1)
@@ -109,7 +113,11 @@ if __name__ == '__main__':
 
     parser = argparse.ArgumentParser(description='Downloads kemono.party images')
     parser.add_argument('-i', type=str, nargs='+', help='input url or text file (one url per line)')
+    parser.add_argument('-dev', help='shows extra logs')
     args = parser.parse_args()
+
+    if args.dev:
+        dev = True
 
     if args.i is None:
         print('No valid input')
